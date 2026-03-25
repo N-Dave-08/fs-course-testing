@@ -3,6 +3,7 @@
 ## Learning Objectives
 
 By completing these exercises, you will:
+
 - ✅ Test React components with React Testing Library
 - ✅ Test component rendering and props
 - ✅ Test user interactions
@@ -13,12 +14,14 @@ By completing these exercises, you will:
 ## Before You Start
 
 **Prerequisites:**
+
 - Testing fundamentals (Level 1)
 - React Testing Library installed
 - Understanding of React components
 - Jest configured
 
 **Setup:**
+
 1. Navigate to `fs-course-testing/level-03-frontend-testing/`
 2. Install: `pnpm add -D @testing-library/react @testing-library/jest-dom @testing-library/user-event`
 3. Create `src/` and `src/__tests__/` directories
@@ -31,6 +34,7 @@ By completing these exercises, you will:
 
 **Instructions:**
 Create `src/components/Button.tsx` and `src/__tests__/components/Button.test.tsx`:
+
 1. Test rendering
 2. Test props
 3. Test user interactions
@@ -38,6 +42,7 @@ Create `src/components/Button.tsx` and `src/__tests__/components/Button.test.tsx
 **Step-by-Step:**
 
 1. **Create Component** (`src/components/Button.tsx`):
+
 ```typescript
 // src/components/Button.tsx
 interface ButtonProps {
@@ -47,11 +52,11 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export default function Button({ 
-  label, 
-  onClick, 
+export default function Button({
+  label,
+  onClick,
   variant = 'primary',
-  disabled = false 
+  disabled = false
 }: ButtonProps) {
   return (
     <button
@@ -66,6 +71,7 @@ export default function Button({
 ```
 
 2. **Create Tests** (`src/__tests__/components/Button.test.tsx`):
+
 ```typescript
 // src/__tests__/components/Button.test.tsx
 import { render, screen } from '@testing-library/react';
@@ -81,10 +87,10 @@ describe('Button Component', () => {
   test('calls onClick when clicked', async () => {
     const handleClick = jest.fn();
     render(<Button label="Click me" onClick={handleClick} />);
-    
+
     const button = screen.getByRole('button', { name: 'Click me' });
     await userEvent.click(button);
-    
+
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
@@ -103,6 +109,7 @@ describe('Button Component', () => {
 ```
 
 **Verification:**
+
 - All tests pass
 - Component renders correctly
 - Interactions work
@@ -117,6 +124,7 @@ describe('Button Component', () => {
 
 **Instructions:**
 Create `src/hooks/useCounter.ts` and `src/__tests__/hooks/useCounter.test.ts`:
+
 1. Test state changes
 2. Test effects
 3. Test return values
@@ -124,9 +132,10 @@ Create `src/hooks/useCounter.ts` and `src/__tests__/hooks/useCounter.test.ts`:
 **Step-by-Step:**
 
 1. **Create Hook** (`src/hooks/useCounter.ts`):
+
 ```typescript
 // src/hooks/useCounter.ts
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useCounter(initialValue: number = 0) {
   const [count, setCount] = useState(initialValue);
@@ -140,56 +149,58 @@ export function useCounter(initialValue: number = 0) {
 ```
 
 2. **Create Tests** (`src/__tests__/hooks/useCounter.test.ts`):
+
 ```typescript
 // src/__tests__/hooks/useCounter.test.ts
-import { renderHook, act } from '@testing-library/react';
-import { useCounter } from '../../hooks/useCounter';
+import { renderHook, act } from "@testing-library/react";
+import { useCounter } from "../../hooks/useCounter";
 
-describe('useCounter Hook', () => {
-  test('initializes with default value', () => {
+describe("useCounter Hook", () => {
+  test("initializes with default value", () => {
     const { result } = renderHook(() => useCounter());
     expect(result.current.count).toBe(0);
   });
 
-  test('initializes with custom value', () => {
+  test("initializes with custom value", () => {
     const { result } = renderHook(() => useCounter(10));
     expect(result.current.count).toBe(10);
   });
 
-  test('increments count', () => {
+  test("increments count", () => {
     const { result } = renderHook(() => useCounter());
-    
+
     act(() => {
       result.current.increment();
     });
-    
+
     expect(result.current.count).toBe(1);
   });
 
-  test('decrements count', () => {
+  test("decrements count", () => {
     const { result } = renderHook(() => useCounter(5));
-    
+
     act(() => {
       result.current.decrement();
     });
-    
+
     expect(result.current.count).toBe(4);
   });
 
-  test('resets count', () => {
+  test("resets count", () => {
     const { result } = renderHook(() => useCounter(10));
-    
+
     act(() => {
       result.current.increment();
       result.current.reset();
     });
-    
+
     expect(result.current.count).toBe(10);
   });
 });
 ```
 
 **Verification:**
+
 - Hook tests pass
 - State changes work
 - All methods work
@@ -204,11 +215,12 @@ describe('useCounter Hook', () => {
 
 **Instructions:**
 Create a small form component and an integration test:
+
 1. Create `src/components/UserForm.tsx`
 2. Create `src/__tests__/integration/UserFlow.test.tsx`
-1. Test multiple components together
-2. Test data flow
-3. Test user workflows
+3. Test multiple components together
+4. Test data flow
+5. Test user workflows
 
 ### Create the component (`src/components/UserForm.tsx`)
 
@@ -254,6 +266,7 @@ export default function UserForm() {
 ```
 
 **Expected Code Structure:**
+
 ```typescript
 // src/__tests__/integration/UserFlow.test.tsx
 import { render, screen } from '@testing-library/react';
@@ -279,6 +292,7 @@ describe('User Flow Integration', () => {
 ```
 
 **Verification:**
+
 - Integration tests pass
 - User flows work
 - Components work together
@@ -295,11 +309,11 @@ pnpm test
 
 ## Verification Checklist
 
-- [ ] Component tests pass
-- [ ] Hook tests pass
-- [ ] Integration tests pass
-- [ ] All interactions work
-- [ ] Best practices followed
+- [x] Component tests pass
+- [x] Hook tests pass
+- [x] Integration tests pass
+- [x] All interactions work
+- [x] Best practices followed
 
 ## Next Steps
 
@@ -311,6 +325,7 @@ pnpm test
 ---
 
 **Key Takeaways:**
+
 - Test user interactions, not implementation
 - Use React Testing Library
 - Test accessibility
