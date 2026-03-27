@@ -3,6 +3,7 @@
 ## Learning Objectives
 
 By completing these exercises, you will:
+
 - ✅ Write deterministic integration tests that span multiple components
 - ✅ Test API flows at the HTTP boundary (Supertest)
 - ✅ Reset state safely between tests (avoid order dependence)
@@ -11,10 +12,12 @@ By completing these exercises, you will:
 ## Before You Start
 
 **Prerequisites:**
+
 - Completed Level 4 lessons and exercises (backend testing)
 - Supertest installed
 
 **Setup:**
+
 1. Navigate to `fs-course-testing/level-05-integration-testing/`
 2. Create `src/__tests__/integration/` directory
 3. Reuse the minimal Express app from Level 4 (`src/app.ts`)
@@ -28,6 +31,7 @@ By completing these exercises, you will:
 **Deliverable:** `src/__tests__/integration/userFlow.test.ts`
 
 **Instructions:**
+
 1. Ensure your `src/app.ts` supports:
    - `POST /api/users` (create)
    - `GET /api/users` (list)
@@ -69,6 +73,7 @@ describe("User Flow Integration", () => {
 
 **Instructions:**
 Write tests that:
+
 1. Send invalid input to `POST /api/users`
 2. Assert:
    - `400` status code
@@ -86,6 +91,7 @@ Write tests that:
 
 **Instructions:**
 Using the auth stub in `src/app.ts`:
+
 1. Assert `GET /api/users/me` returns 401 without auth header
 2. Call `POST /api/auth/login` and capture the token
 3. Assert `GET /api/users/me` returns 200 with `Authorization: Bearer <token>`
@@ -95,6 +101,7 @@ Using the auth stub in `src/app.ts`:
 ## Optional (Advanced): Real DB-backed Integration
 
 If you already have Prisma + a test database configured (from `fs-course-database`):
+
 - swap the in-memory store in your app for Prisma
 - use `TEST_DATABASE_URL`
 - reset state in `beforeEach` (delete in FK-safe order / truncate strategy)
@@ -111,14 +118,15 @@ pnpm test
 
 ## Verification Checklist
 
-- [ ] Tests are order-independent (reset state per test)
-- [ ] I tested both success and error flows
-- [ ] Assertions check stable contracts (shape + status)
-- [ ] Auth flow distinguishes 401 vs 200 correctly
+- [x] Tests are order-independent (reset state per test)
+- [x] I tested both success and error flows
+- [x] Assertions check stable contracts (shape + status)
+- [x] Auth flow distinguishes 401 vs 200 correctly
 
 ---
 
 **Key Takeaways:**
+
 - Integration tests validate boundaries where many real bugs occur.
 - Deterministic reset is the difference between reliable tests and flaky suites.
 - Assert contracts (status + shape) rather than brittle dynamic data.
