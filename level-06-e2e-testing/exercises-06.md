@@ -3,6 +3,7 @@
 ## Learning Objectives
 
 By completing these exercises, you will:
+
 - ✅ Write E2E tests with Playwright
 - ✅ Test complete user flows
 - ✅ Implement Page Object Model
@@ -13,12 +14,14 @@ By completing these exercises, you will:
 ## Before You Start
 
 **Prerequisites:**
+
 - Integration testing (Level 5)
 - Playwright installed
 - Application running
 - Understanding of E2E concepts
 
 **Setup:**
+
 1. Navigate to `fs-course-testing/level-06-e2e-testing/`
 2. Install: `pnpm add -D @playwright/test`
 3. Create `e2e/` directory
@@ -31,32 +34,34 @@ By completing these exercises, you will:
 
 **Instructions:**
 Create `e2e/homepage.spec.ts`:
+
 1. Test homepage loads
 2. Test navigation
 3. Test basic interactions
 
 **Expected Code Structure:**
+
 ```typescript
 // e2e/homepage.spec.ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Homepage', () => {
-  test('loads successfully', async ({ page }) => {
+test.describe("Homepage", () => {
+  test("loads successfully", async ({ page }) => {
     // Uses baseURL from playwright.config.ts
-    await page.goto('/');
+    await page.goto("/");
     await expect(page).toHaveTitle(/Next.js/);
   });
 
-  test('navigation works', async ({ page }) => {
-    await page.goto('/');
+  test("navigation works", async ({ page }) => {
+    await page.goto("/");
     // Prefer role-based locators when possible
-    await page.getByRole('link', { name: /about/i }).click();
+    await page.getByRole("link", { name: /about/i }).click();
     await expect(page).toHaveURL(/.*about/);
   });
 
-  test('interactions work', async ({ page }) => {
-    await page.goto('/');
-    const button = page.getByRole('button', { name: /click/i });
+  test("interactions work", async ({ page }) => {
+    await page.goto("/");
+    const button = page.getByRole("button", { name: /click/i });
     await button.click();
     await expect(page.getByText(/success/i)).toBeVisible();
   });
@@ -64,6 +69,7 @@ test.describe('Homepage', () => {
 ```
 
 **Verification:**
+
 - E2E tests pass
 - Browser interactions work
 - Navigation works
@@ -78,31 +84,33 @@ test.describe('Homepage', () => {
 
 **Instructions:**
 Create `e2e/userFlow.spec.ts`:
+
 1. Test registration
 2. Test login
 3. Test dashboard access
 
 **Expected Code Structure:**
+
 ```typescript
 // e2e/userFlow.spec.ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('User Flow', () => {
-  test('complete registration and login flow', async ({ page }) => {
+test.describe("User Flow", () => {
+  test("complete registration and login flow", async ({ page }) => {
     // Registration
-    await page.goto('/register');
-    await page.fill('input[name="name"]', 'Test User');
-    await page.fill('input[name="email"]', 'test@example.com');
-    await page.fill('input[name="password"]', 'password123');
+    await page.goto("/register");
+    await page.fill('input[name="name"]', "Test User");
+    await page.fill('input[name="email"]', "test@example.com");
+    await page.fill('input[name="password"]', "password123");
     await page.click('button[type="submit"]');
-    
+
     await expect(page).toHaveURL(/.*login/);
 
     // Login
-    await page.fill('input[name="email"]', 'test@example.com');
-    await page.fill('input[name="password"]', 'password123');
+    await page.fill('input[name="email"]', "test@example.com");
+    await page.fill('input[name="password"]', "password123");
     await page.click('button[type="submit"]');
-    
+
     await expect(page).toHaveURL(/.*dashboard/);
     await expect(page.getByText(/welcome/i)).toBeVisible();
   });
@@ -110,6 +118,7 @@ test.describe('User Flow', () => {
 ```
 
 **Verification:**
+
 - Complete flow works
 - User can register and login
 - Dashboard accessible
@@ -126,15 +135,16 @@ test.describe('User Flow', () => {
 Create page classes and refactor tests.
 
 **Expected Code Structure:**
+
 ```typescript
 // e2e/pages/LoginPage.ts
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export class LoginPage {
   constructor(private page: Page) {}
 
   async goto() {
-    await this.page.goto('/login');
+    await this.page.goto("/login");
   }
 
   async login(email: string, password: string) {
@@ -147,18 +157,19 @@ export class LoginPage {
 
 ```typescript
 // e2e/login.spec.ts
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
+import { test, expect } from "@playwright/test";
+import { LoginPage } from "../pages/LoginPage";
 
-test('login with page object', async ({ page }) => {
+test("login with page object", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
-  await loginPage.login('user@example.com', 'password123');
+  await loginPage.login("user@example.com", "password123");
   await expect(page).toHaveURL(/.*dashboard/);
 });
 ```
 
 **Verification:**
+
 - Page objects work
 - Tests are maintainable
 - Code is reusable
@@ -179,11 +190,11 @@ pnpm test:e2e
 
 ## Verification Checklist
 
-- [ ] E2E tests pass
-- [ ] User flows work
-- [ ] Page objects work
-- [ ] Tests are maintainable
-- [ ] All interactions work
+- [x] E2E tests pass
+- [x] User flows work
+- [x] Page objects work
+- [x] Tests are maintainable
+- [x] All interactions work
 
 ## Next Steps
 
@@ -195,6 +206,7 @@ pnpm test:e2e
 ---
 
 **Key Takeaways:**
+
 - E2E tests real user flows
 - Use Page Object Model
 - Test in real browsers
